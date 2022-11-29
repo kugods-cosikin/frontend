@@ -24,23 +24,34 @@ function AuthForm({ type }: Props) {
     format: true,
     confirm: true,
     message: '',
+    first: true,
   });
 
   const validateInputs = (email: string, password: string, passwordConfirm: string) => {
-    const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    const regExpPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$/;
-    const valid = re.test(email);
-    setEmailValid(valid);
+    const regExpEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    const eValid = regExpEmail.test(email);
+    setEmailValid(eValid);
 
-    if (password !== passwordConfirm) {
-      setPasswordValid({ ...passwordValid, confirm: false, message: '비밀번호가 일치하지 않습니다.' });
-    } else {
-      setPasswordValid({ ...passwordValid, confirm: true, message: '' });
-    }
-    if (regExpPassword.test(password)) {
-      setPasswordValid({ ...passwordValid, format: true });
-    } else {
-      setPasswordValid({ ...passwordValid, format: false, message: '비밀번호 형식에 맞춰주세요.' });
+    const regExpPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$/;
+    const format = regExpPassword.test(password);
+    const confirm = password === passwordConfirm;
+
+    setPasswordValid({ ...passwordValid, first: false });
+    switch (true) {
+      case password === passwordConfirm && format:
+        setPasswordValid({ ...passwordValid, format, confirm, message: '' });
+        break;
+      case format === true && confirm === false:
+        setPasswordValid({ ...passwordValid, format, confirm, message: '비밀번호가 일치하지 않습니다.' });
+        break;
+      case format === false && confirm === true:
+        setPasswordValid({ ...passwordValid, format, confirm, message: '비밀번호가 유효하지 않습니다.' });
+        break;
+      case format === false && confirm === false:
+        setPasswordValid({ ...passwordValid, format, confirm, message: '비밀번호가 유효하지 않습니다.' });
+        break;
+      default:
+        break;
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,13 +70,13 @@ function AuthForm({ type }: Props) {
     validateInputs(email, password, passwordConfirm);
 
     if (type === 'login') {
-      if (emailValid) {
+      if (emailValid && !passwordValid.first) {
         console.log('login');
         // login({ email, password });
       }
     }
     if (type === 'register') {
-      if (emailValid && passwordValid.format && passwordValid.confirm) {
+      if ((emailValid && passwordValid.format && passwordValid.confirm, !passwordValid.first)) {
         console.log('register');
         // register({ email, password });
       }
@@ -74,7 +85,7 @@ function AuthForm({ type }: Props) {
   return (
     <>
       <div>
-        <h2>{type === 'register' ? "You're now part of COSHIKIN." : 'Welcome back to COSHIKIN :)'}</h2>
+        <h2>{type === 'register' ? "You're now part of COSIKIN." : 'Welcome back to COSIKIN :)'}</h2>
         <p>Sign in to view more information.</p>
       </div>
       <h1>{text}</h1>
@@ -97,16 +108,14 @@ function AuthForm({ type }: Props) {
             value={passwordConfirm}
           />
         )}
-        {type === 'register' && (passwordValid.confirm === false || passwordValid.format === false)
-          ? passwordValid.message
-          : null}
-        {type === 'login' && <Link to="/아직 모릅니다">Forgot Password?</Link>}
+        {type === 'register' && passwordValid.message ? passwordValid.message : null}
         {type === 'register' && (
           <span>
             <input type="checkbox" name="passwordShow" onChange={passwordToggle} />
             Show Password
           </span>
         )}
+        {type === 'login' && <Link to="/비밀번호찾기~">Forgot Password?</Link>}
         <button>{text}</button>
       </form>
     </>
