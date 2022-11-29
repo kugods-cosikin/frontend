@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 /* eslint-disable react/button-has-type */
-import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { login, register } from '../../lib/api/auth';
 
 interface Props {
   type: string;
@@ -19,19 +20,27 @@ function AuthForm({ type }: Props) {
 
   const [passwordView, setPasswordView] = useState(false);
   const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState({
+    format: true,
+    confirm: true,
+    message: '',
+  });
 
   const validateInputs = (email: string, password: string, passwordConfirm: string) => {
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    const regExpPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,16}$/;
     const valid = re.test(email);
     setEmailValid(valid);
-    if (password.length < 4) {
-      setPasswordValid(false);
-    }
+
     if (password !== passwordConfirm) {
-      setPasswordValid(false);
+      setPasswordValid({ ...passwordValid, confirm: false, message: '비밀번호가 일치하지 않습니다.' });
     } else {
-      setPasswordValid(true);
+      setPasswordValid({ ...passwordValid, confirm: true, message: '' });
+    }
+    if (regExpPassword.test(password)) {
+      setPasswordValid({ ...passwordValid, format: true });
+    } else {
+      setPasswordValid({ ...passwordValid, format: false, message: '비밀번호 형식에 맞춰주세요.' });
     }
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,33 +58,16 @@ function AuthForm({ type }: Props) {
 
     validateInputs(email, password, passwordConfirm);
 
-    if (emailValid && passwordValid) {
-      if (type === 'login') {
-        axios
-          .post('/auth/signin/apply', {
-            email,
-            password,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    if (type === 'login') {
+      if (emailValid) {
+        console.log('login');
+        // login({ email, password });
       }
-      if (type === 'register') {
-        axios
-          .post('/auth/signup/apply', {
-            email,
-            password,
-            passwordConfirm,
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    }
+    if (type === 'register') {
+      if (emailValid && passwordValid.format && passwordValid.confirm) {
+        console.log('register');
+        // register({ email, password });
       }
     }
   };
@@ -92,7 +84,7 @@ function AuthForm({ type }: Props) {
         <input
           type={passwordView ? 'text' : 'password'}
           name="password"
-          placeholder="Password"
+          placeholder={type === 'register' ? 'Password (특수문자, 영문, 숫자 포함 6-16자)' : 'Password'}
           onChange={onChange}
           value={password}
         />
@@ -105,8 +97,10 @@ function AuthForm({ type }: Props) {
             value={passwordConfirm}
           />
         )}
-        {passwordValid === false ? '비밀번호가 일치하지 않습니다!' : null}
-        {type === 'login' && <Link to="/password..?">Forgot Password?</Link>}
+        {type === 'register' && (passwordValid.confirm === false || passwordValid.format === false)
+          ? passwordValid.message
+          : null}
+        {type === 'login' && <Link to="/아직 모릅니다">Forgot Password?</Link>}
         {type === 'register' && (
           <span>
             <input type="checkbox" name="passwordShow" onChange={passwordToggle} />
