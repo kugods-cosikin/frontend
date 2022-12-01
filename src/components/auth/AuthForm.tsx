@@ -27,7 +27,7 @@ const LeftBox = styled.div`
   min-width: max-content;
 
   & div {
-    width: 370px;
+    width: 410px;
     weight: 700;
     margin: auto;
   }
@@ -214,7 +214,7 @@ function AuthForm({ type }: Props) {
     <FullScreen>
       <LeftBox>
         <div>
-          <h2>{type === 'register' ? "You're now part of COSIKIN." : 'Welcome back to COSIKIN :)'}</h2>
+          <h2>{type === 'register' ? "You're now part of COSHIKIN." : 'Welcome back to COSHIKIN :)'}</h2>
           <p>Sign in to view more information.</p>
         </div>
       </LeftBox>

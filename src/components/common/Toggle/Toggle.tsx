@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import palette from '../../../lib/styles/palette';
 import './toggle.css';
 
 interface Props {
