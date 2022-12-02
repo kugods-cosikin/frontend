@@ -1,9 +1,7 @@
-/* eslint-disable func-names */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { setup } from '../../lib/api/setup';
+import { guestSetup, hostSetup } from '../../lib/api/setup';
 import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 import Photo from '../common/Photo';
@@ -29,7 +27,7 @@ const Content1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 499px;
+  width: 440px;
   height: 504px;
   padding: 20px;
   border-radius: 10px;
@@ -40,7 +38,7 @@ const Content1 = styled.div`
 `;
 const Content2 = styled.div`
   height: 504px;
-  width: 345px;
+  width: 400px;
   padding: 20px;
   border-radius: 10px;
   border: 1px solid ${palette.gray[3]};
@@ -58,12 +56,6 @@ const PhotoDiv = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const NameDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 470px;
-  justify-content: space-between;
-`;
 const ButtonDiv = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -73,15 +65,27 @@ const InputContainer = styled.div`
     fontsize: 15px;
     margin-bottom: 3px;
   }
+  .disabled {
+    border-color: ${palette.gray[3]};
+    color: ${palette.gray[2]};
+  }
 `;
 const StyledInput = styled.input`
   font-size: 15px;
   border-radius: 10px;
-  border: 2px solid ${palette.gray[2]};
+  border: 1px solid ${palette.gray[2]};
   padding-left: 10px;
   outline: none;
-  & + disabled {
-    border: 2px solid ${palette.gray[3]};
+`;
+const StyledTextArea = styled.textarea`
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid ${palette.gray[2]};
+  padding-left: 10px;
+  outline: none;
+  resize: none;
+  &::placeholder {
+    font-size: 15px;
   }
 `;
 const Star = styled.span`
@@ -90,21 +94,40 @@ const Star = styled.span`
   padding-left: 3px;
 `;
 
+interface Image {
+  image: File | null | undefined;
+}
+
 function PersonalSettingForm() {
-  const [isHost, setIsHost] = useState(false);
-  const handleCallback = (isChecked: boolean) => {
+  // Photo로부터 image 가져오기(시작)
+  const [image, setImage] = useState<Image>({
+    image: null,
+  });
+
+  const handlePhotoCallback = (image: File | null | undefined) => {
+    setImage({
+      image,
+    });
+  };
+  // Photo로부터 image 가져오기(끝)
+
+  // Toggle로부터 state 가져오기(시작)
+  const handleToggleCallback = (isChecked: boolean) => {
     setIsHost(isChecked);
   };
+
+  const [isHost, setIsHost] = useState(false);
+  // Toggle로부터 state 가져오기(끝)
+
   const [inputs, setInputs] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     username: '',
     bio: '',
     type: 'guest',
     github: '',
     stack: '',
   });
-  const { firstName, lastName, username, bio, type, github, stack } = inputs;
+  const { name, username, bio, type, github, stack } = inputs;
 
   const handleOnInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -113,15 +136,42 @@ function PersonalSettingForm() {
       [name]: value,
     });
   };
-
-  const updateOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleOnTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+  const validateInputs = (name: string, username: string, bio: string, type: string, github: string, stack: string) => {
+    if (isHost === true) {
+      // 호스트일 때
+      const hostArray = [name, username, bio, type, github, stack];
+      if (hostArray.includes('')) {
+        console.log('Host setup 실패');
+      } else {
+        console.log('Host setup 성공');
+        console.log(image, name, username, bio, type, github, stack);
+        // hostSetup({ image, name, username, bio, type, github, stack });
+      }
+    } else {
+      // 게스트일 때
+      const guestArray = [name, username, bio, type];
+      if (guestArray.includes('')) {
+        console.log('guest setup 실패');
+      } else {
+        console.log('guest setup 성공');
+        console.log(image, name, username, bio, type);
+        // hostSetup({ image, name, username, bio, type });
+      }
+    }
   };
   const deleteOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+    console.log('delete');
   };
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    validateInputs(name, username, bio, type, github, stack);
   };
 
   useEffect(() => {
@@ -140,102 +190,89 @@ function PersonalSettingForm() {
       <form onSubmit={handleOnSubmit}>
         <ContentBox>
           <PhotoDiv>
-            <Photo />
+            <Photo parentCallback={handlePhotoCallback} />
             <Button
               type="button"
-              onClick={updateOnClick}
-              width="82px"
+              onClick={deleteOnClick}
+              width="90px"
               height="26px"
               backgroundColor={palette.purple[1]}
+              style={{ marginTop: '20px', marginLeft: '5px', zIndex: '3' }}
             >
-              Update
-            </Button>
-            <Button type="button" onClick={deleteOnClick} width="82px" height="26px" backgroundColor={palette.gray[2]}>
-              Delete
+              삭제
             </Button>
           </PhotoDiv>
 
           <Content1>
-            <NameDiv>
-              <InputContainer>
-                <p>
-                  First Name<Star>*</Star>
-                </p>
-                <StyledInput
-                  name="firstName"
-                  onChange={handleOnInputChange}
-                  placeholder="Enter your first name"
-                  style={{ height: '49px', width: '210px' }}
-                  value={firstName}
-                />
-              </InputContainer>
-              <InputContainer>
-                <p>
-                  Second Name<Star>*</Star>
-                </p>
-                <StyledInput
-                  name="lastName"
-                  onChange={handleOnInputChange}
-                  placeholder="Enter your second name"
-                  style={{ height: '49px', width: '210px' }}
-                  value={lastName}
-                />
-              </InputContainer>
-            </NameDiv>
             <InputContainer>
               <p>
-                Username<Star>*</Star>
+                이름<Star>*</Star>
+              </p>
+              <StyledInput
+                name="name"
+                onChange={handleOnInputChange}
+                placeholder="이름을 입력해 주세요"
+                style={{ height: '49px', width: '420px' }}
+                value={name}
+              />
+            </InputContainer>
+
+            <InputContainer>
+              <p>
+                사용자 이름<Star>*</Star>
               </p>
               <StyledInput
                 name="username"
                 onChange={handleOnInputChange}
-                placeholder="Enter your username"
-                style={{ height: '49px', width: '457px' }}
+                placeholder="사용자 이름을 입력해 주세요"
+                style={{ height: '49px', width: '420px' }}
                 value={username}
               />
             </InputContainer>
             <InputContainer>
               <p>
-                Bio<Star>*</Star>
+                한 줄 소개<Star>*</Star>
               </p>
-              <StyledInput
+              <StyledTextArea
                 name="bio"
-                onChange={handleOnInputChange}
-                placeholder="Tell us more about you"
-                style={{ height: '250px', width: '457px' }}
+                onChange={handleOnTextAreaChange}
+                placeholder="한 줄 소개를 입력해 주세요"
+                style={{ height: '250px', width: '420px' }}
                 value={bio}
               />
             </InputContainer>
           </Content1>
 
           <Content2>
-            <PDiv>
-              <p>Being a Host</p>
-              <p>
-                <a href="/host_what?">What is a host?</a>
-              </p>
-            </PDiv>
-            <Toggle parentCallback={handleCallback} />
+            <div>
+              <PDiv>
+                <p>호스트 되기</p>
+                <p>
+                  <a href="/host_what?">호스트가 뭔가요?</a>
+                </p>
+              </PDiv>
+              <Toggle parentCallback={handleToggleCallback} />
+            </div>
             <InputContainer>
-              <p className={inputs.type}>Github repository{isHost && <Star>*</Star>}</p>
+              <p className={!isHost ? 'disabled' : 'abled'}>깃허브 프로필{isHost && <Star>*</Star>}</p>
               <StyledInput
-                className={isHost ? 'disabled' : 'abled'}
+                className={!isHost ? 'disabled' : 'abled'}
                 name="github"
                 onChange={handleOnInputChange}
-                placeholder="Enter your Github repository"
-                style={{ height: '49px', width: '282px' }}
+                placeholder="깃허브 프로필을 입력해 주세요"
+                style={{ height: '49px', width: '380px' }}
                 value={github}
                 disabled={!isHost}
               />
             </InputContainer>
             <InputContainer>
-              <p className={inputs.type}>Stacks{isHost && <Star>*</Star>}</p>
-              <StyledInput
-                className={isHost ? 'disabled' : 'abled'}
+              <p className={!isHost ? 'disabled' : 'abled'}>스택{isHost && <Star>*</Star>}</p>
+              <StyledTextArea
+                className={!isHost ? 'disabled' : 'abled'}
                 name="stack"
-                onChange={handleOnInputChange}
-                placeholder="Note your stacks by #Hashtags"
-                style={{ height: '250px', width: '282px' }}
+                onChange={handleOnTextAreaChange}
+                placeholder="#해시태그를 이용해 스택을 입력해 주세요"
+                style={{ height: '250px', width: '380px' }}
                 value={stack}
                 disabled={!isHost}
               />
@@ -245,7 +282,7 @@ function PersonalSettingForm() {
 
         <ButtonDiv>
           <Button width="150px" height="49px" backgroundColor={palette.purple[1]}>
-            Sign up
+            프로필 설정
           </Button>
         </ButtonDiv>
       </form>

@@ -1,21 +1,16 @@
+/* eslint-disable global-require */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { logoUrl } from '../../lib/styles/logoUrl';
 import palette from '../../lib/styles/palette';
 
 const LogoTitleContainer = styled.div`
-  position: absolute;
-  top: 33px;
-  left: 33px;
-
   display: flex;
   flex-direction: row;
   align-itmes: center;
   height: max-content;
   width: max-content;
-  margin-bottom: 30px;
   cursor: pointer;
 
   & img {
@@ -28,6 +23,7 @@ const LogoTitleContainer = styled.div`
     margin: auto 0;
     height: 30px;
     width: 90px;
+    margin-top: 5px;
 
     font-size: 17px;
     color: ${palette.purple[1]};
@@ -41,13 +37,9 @@ function UpperLogo() {
   };
   return (
     <LogoTitleContainer onClick={onClick}>
-      <img
-        alt="logo"
-        src={logoUrl}
-        // 로고
-      />
+      <img alt="logo" src={require('./images/logo.png')} />
 
-      <h1>COSHIKIN</h1>
+      <h1>코식iN</h1>
     </LogoTitleContainer>
   );
 }

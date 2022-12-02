@@ -1,8 +1,8 @@
+/* eslint-disable global-require */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { logoUrl } from '../../lib/styles/logoUrl';
 
 const LogoTitleContainer = styled.div`
   display: flex;
@@ -38,13 +38,7 @@ function LogoTitle({ title }: Props) {
   };
   return (
     <LogoTitleContainer>
-      <img
-        onClick={onClick}
-        alt="logo"
-        src={logoUrl}
-        // 로고
-      />
-
+      <img onClick={onClick} alt="logo" src={require('./images/logo.png')} />
       <h1>{title}</h1>
     </LogoTitleContainer>
   );

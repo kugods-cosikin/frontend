@@ -1,8 +1,5 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable no-console */
-/* eslint-disable react/button-has-type */
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -81,6 +78,7 @@ const StyledInput = styled.input`
   outline: none;
   width: 377px;
   height: 49px;
+  maxlength: 22;
   & + & {
     margin-top: 1rem;
   }
