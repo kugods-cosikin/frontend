@@ -1,8 +1,8 @@
 import React from 'react';
-import NavBar from '../NavBar/NavBar';
+import ThickSideBar from '../SideBar/ThickSideBar';
 
 function LandingPage() {
-  return <NavBar />;
+  return <ThickSideBar />;
 }
 
 export default LandingPage;

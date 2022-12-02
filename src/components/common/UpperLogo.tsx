@@ -8,9 +8,6 @@ import palette from '../../lib/styles/palette';
 const LogoTitleContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-itmes: center;
-  height: max-content;
-  width: max-content;
   cursor: pointer;
 
   & img {
@@ -21,11 +18,9 @@ const LogoTitleContainer = styled.div`
   }
   & h1 {
     margin: auto 0;
-    height: 30px;
-    width: 90px;
-    margin-top: 5px;
+    width: 150px;
 
-    font-size: 17px;
+    font-size: 30px;
     color: ${palette.purple[1]};
   }
 `;
@@ -39,7 +34,7 @@ function UpperLogo() {
     <LogoTitleContainer onClick={onClick}>
       <img alt="logo" src={require('./images/logo.png')} />
 
-      <h1>코식iN</h1>
+      <h1>코식IN</h1>
     </LogoTitleContainer>
   );
 }

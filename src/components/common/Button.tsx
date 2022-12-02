@@ -12,7 +12,6 @@ const Button = styled.button<Props>`
   border: none;
   color: white;
   font-size: 15px;
-  margin-top: 15px;
   cursor: pointer;
   width: ${(props) => props.width};
   height: ${(props) => props.height};

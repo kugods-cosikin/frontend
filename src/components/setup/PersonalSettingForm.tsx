@@ -22,6 +22,7 @@ const Title = styled.div``;
 const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
+  margin-bottom: 15px;
 `;
 const Content1 = styled.div`
   display: flex;
@@ -95,21 +96,32 @@ const Star = styled.span`
 `;
 
 interface Image {
-  image: File | null | undefined;
+  image: File | null;
 }
 
 function PersonalSettingForm() {
+  const [isButtonOn, setIsButtonOn] = useState(false);
   // Photo로부터 image 가져오기(시작)
   const [image, setImage] = useState<Image>({
     image: null,
   });
 
-  const handlePhotoCallback = (image: File | null | undefined) => {
+  const handlePhotoCallback = (image: File | null) => {
     setImage({
       image,
     });
   };
   // Photo로부터 image 가져오기(끝)
+
+  useEffect(() => {
+    // photo에서 가져온 image 따라 버튼 활성/비활성화
+    if (image.image) {
+      setIsButtonOn(true);
+    } else {
+      setIsButtonOn(false);
+    }
+    console.log(image);
+  }, [image]);
 
   // Toggle로부터 state 가져오기(시작)
   const handleToggleCallback = (isChecked: boolean) => {
@@ -167,7 +179,7 @@ function PersonalSettingForm() {
     }
   };
   const deleteOnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('delete');
+    setImage({ image: null });
   };
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -190,13 +202,13 @@ function PersonalSettingForm() {
       <form onSubmit={handleOnSubmit}>
         <ContentBox>
           <PhotoDiv>
-            <Photo parentCallback={handlePhotoCallback} />
+            <Photo parentCallback={handlePhotoCallback} isButtonOn={isButtonOn} />
             <Button
               type="button"
-              onClick={deleteOnClick}
+              onClick={isButtonOn ? deleteOnClick : undefined}
               width="90px"
               height="26px"
-              backgroundColor={palette.purple[1]}
+              backgroundColor={isButtonOn ? palette.purple[1] : palette.gray[3]}
               style={{ marginTop: '20px', marginLeft: '5px', zIndex: '3' }}
             >
               삭제

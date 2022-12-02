@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-alert */
 /* eslint-disable global-require */
 import React, { useEffect, useState } from 'react';
@@ -48,10 +49,11 @@ const PhotoDiv = styled.img`
 `;
 
 interface Props {
-  parentCallback: (image: File | null | undefined) => void;
+  parentCallback: (image: File | null) => void;
+  isButtonOn: boolean;
 }
 
-function Photo({ parentCallback }: Props) {
+function Photo({ parentCallback, isButtonOn }: Props) {
   // 전달할 file을 위한 state
   const [image, setImage] = useState<File | null>(null);
 
@@ -61,6 +63,13 @@ function Photo({ parentCallback }: Props) {
   useEffect(() => {
     parentCallback(image);
   }, [image]);
+
+  useEffect(() => {
+    if (!isButtonOn) {
+      setImage(null);
+      setImageSrc(null);
+    }
+  }, [isButtonOn]);
 
   const encodeFileToBase64 = (fileBlob: File) => {
     const reader = new FileReader();
@@ -80,14 +89,14 @@ function Photo({ parentCallback }: Props) {
     if (files && files.type.substring(0, 5) === 'image') {
       setImage(files);
       encodeFileToBase64(files);
-    } else {
-      setImage(null);
     }
+    e.currentTarget.value = '';
   };
+
   return (
     <Container>
       <PhotoDiv src={imageSrc || profile} alt="" />
-      <StyledFile type="file" accept="/image/*" onChange={onChange} />
+      <StyledFile id="input" type="file" accept="/image/*" onChange={onChange} />
       <Camera src={camera} alt="" />
     </Container>
   );

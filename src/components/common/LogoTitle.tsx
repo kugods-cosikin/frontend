@@ -3,6 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from './images/logo.png';
 
 const LogoTitleContainer = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ function LogoTitle({ title }: Props) {
   };
   return (
     <LogoTitleContainer>
-      <img onClick={onClick} alt="logo" src={require('./images/logo.png')} />
+      <img onClick={onClick} alt="logo" src={logo} />
       <h1>{title}</h1>
     </LogoTitleContainer>
   );

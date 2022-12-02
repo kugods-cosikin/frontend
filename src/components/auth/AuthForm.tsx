@@ -8,6 +8,7 @@ import palette from '../../lib/styles/palette';
 import LogoTitle from '../common/LogoTitle';
 
 const FullScreen = styled.div`
+  position: relative;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -19,7 +20,7 @@ const LeftBox = styled.div`
   flex-direction: column;
   align-itmes: center;
   justify-content: center;
-  background-color: ${palette.purple[2]};
+  background-color: ${palette.purple[3]};
 
   min-width: max-content;
 
