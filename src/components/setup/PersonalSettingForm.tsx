@@ -70,7 +70,7 @@ const ButtonDiv = styled.div`
 `;
 const InputContainer = styled.div`
   & p {
-    fontsize: 15px;
+    font-size: 15px;
     margin-bottom: 3px;
   }
 `;
