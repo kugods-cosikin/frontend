@@ -1,8 +1,8 @@
 import React from 'react';
-import ThickSideBar from '../SideBar/ThickSideBar';
+import ThickSideBar from '../../components/common/sidebar/ThickSideBar';
 
 function LandingPage() {
-  return <ThickSideBar />;
+  return <>gg</>;
 }
 
 export default LandingPage;

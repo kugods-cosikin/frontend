@@ -10,7 +10,7 @@ import LogoTitle from '../common/LogoTitle';
 const FullScreen = styled.div`
   position: relative;
   height: 100vh;
-  width: 100%;
+  width: 100vh;
   display: flex;
 `;
 const LeftBox = styled.div`
@@ -93,6 +93,7 @@ const StyledButton = styled.button`
   color: white;
   font-size: 15px;
   margin-top: 15px;
+  cursor: pointer;
 `;
 
 interface Props {
