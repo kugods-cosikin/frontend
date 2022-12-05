@@ -19,7 +19,7 @@ const TopBarContainer = styled.div`
   background-color: ${palette.gray[5]};
   border-bottom: 3px solid ${palette.gray[4]};
 
-  min-width: 100vh;
+  min-width: 1000px;
 `;
 const LeftBox = styled.div`
   margin-left: 30px;
