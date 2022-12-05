@@ -10,7 +10,7 @@ import LogoTitle from '../common/LogoTitle';
 const FullScreen = styled.div`
   position: relative;
   height: 100vh;
-  width: 100vh;
+  width: 100%;
   display: flex;
 `;
 const LeftBox = styled.div`

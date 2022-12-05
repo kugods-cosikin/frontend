@@ -14,10 +14,13 @@ import AboutUsPage from './view/ExceptPage/AboutUsPage';
 import Sidebar from './view/SideBar/SideBar';
 
 const FullDiv = styled.div`
-  height: 100vh;
-  width: 100vh;
-  margin-right: 0px;
-  padding: 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  min-width: 100%;
 `;
 
 function App() {

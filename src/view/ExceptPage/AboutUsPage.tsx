@@ -1,9 +1,8 @@
 import React from 'react';
 import ThickSideBarBox from '../../components/common/sidebarbox/ThickSideBarBox';
-import SidebarBoxForm from '../../containers/sidebarbox/SidebarBoxForm';
 
 function AboutUsPage() {
-  return <>a</>;
+  return <ThickSideBarBox>ㅁㅇㄹ</ThickSideBarBox>;
 }
 
 export default AboutUsPage;

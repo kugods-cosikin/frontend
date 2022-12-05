@@ -2,11 +2,7 @@ import React from 'react';
 import AuthForm from '../../components/auth/AuthForm';
 
 function LoginForm() {
-  return (
-    <div>
-      <AuthForm type="login" />
-    </div>
-  );
+  return <AuthForm type="login" />;
 }
 
 export default LoginForm;
