@@ -8,40 +8,40 @@ import profile from './images/icon_profile.png';
 import camera from './images/icon_camera.png';
 
 const Container = styled.div`
-  width: 100px;
-  height: 100px;
-  z-index: 0;
+  width: 120px;
+  height: 120px;
   position: relative;
+  margin: 0 auto;
 `;
 
 const Camera = styled.img`
-  z-index: 1;
-  width: 25px;
-  height: 25px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   position: relative;
-  top: -150px;
-  left: 75px;
+  top: -160px;
+  left: 80px;
 `;
 const StyledFile = styled.input`
-  z-index: 1;
-  height: 100px;
-  width: 100px;
+  z-index: 0;
+  height: 110px;
+  width: 110px;
   border-radius: 50%;
-  border: 0.5px solid ${palette.gray[4]};
+  border: 0px solid ${palette.gray[4]};
   cursor: pointer;
   font-size: 0;
   position: relative;
-  top: -127px;
+  top: -136px;
   left: 4px;
 
   &::file-selector-button {
     display: none;
 `;
 const PhotoDiv = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
   border: 5px solid ${palette.gray[3]};

@@ -197,7 +197,7 @@ function PersonalSettingForm() {
   return (
     <Wrapped>
       <Title>
-        <h1>Personal Info Settings</h1>
+        <h1>개인정보 설정</h1>
       </Title>
       <form onSubmit={handleOnSubmit}>
         <ContentBox>
@@ -209,7 +209,7 @@ function PersonalSettingForm() {
               width="90px"
               height="26px"
               backgroundColor={isButtonOn ? palette.purple[1] : palette.gray[3]}
-              style={{ marginTop: '20px', marginLeft: '5px', zIndex: '3' }}
+              style={{ marginTop: '20px', zIndex: '3' }}
             >
               삭제
             </Button>
@@ -226,19 +226,21 @@ function PersonalSettingForm() {
                 placeholder="이름을 입력해 주세요"
                 style={{ height: '49px', width: '420px' }}
                 value={name}
+                maxLength={10}
               />
             </InputContainer>
 
             <InputContainer>
               <p>
-                사용자 이름<Star>*</Star>
+                닉네임<Star>*</Star>
               </p>
               <StyledInput
                 name="username"
                 onChange={handleOnInputChange}
-                placeholder="사용자 이름을 입력해 주세요"
+                placeholder="닉네임을 입력해 주세요"
                 style={{ height: '49px', width: '420px' }}
                 value={username}
+                maxLength={14}
               />
             </InputContainer>
             <InputContainer>
@@ -248,9 +250,10 @@ function PersonalSettingForm() {
               <StyledTextArea
                 name="bio"
                 onChange={handleOnTextAreaChange}
-                placeholder="한 줄 소개를 입력해 주세요"
+                placeholder="한 줄 소개를 입력해 주세요 (최대 100자)"
                 style={{ height: '250px', width: '420px' }}
                 value={bio}
+                maxLength={100}
               />
             </InputContainer>
           </Content1>
@@ -275,6 +278,7 @@ function PersonalSettingForm() {
                 style={{ height: '49px', width: '380px' }}
                 value={github}
                 disabled={!isHost}
+                maxLength={20}
               />
             </InputContainer>
             <InputContainer>
@@ -283,10 +287,11 @@ function PersonalSettingForm() {
                 className={!isHost ? 'disabled' : 'abled'}
                 name="stack"
                 onChange={handleOnTextAreaChange}
-                placeholder="#해시태그를 이용해 스택을 입력해 주세요"
+                placeholder="#해시태그를 이용해 스택을 입력해 주세요          ex) #React #Node #C++"
                 style={{ height: '250px', width: '380px' }}
                 value={stack}
                 disabled={!isHost}
+                maxLength={100}
               />
             </InputContainer>
           </Content2>
