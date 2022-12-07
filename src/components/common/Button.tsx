@@ -7,6 +7,7 @@ interface Props {
   backgroundColor: string;
 }
 const Button = styled.button<Props>`
+  z-index: 5;
   cursor: pointer;
   border-radius: 10px;
   border: none;

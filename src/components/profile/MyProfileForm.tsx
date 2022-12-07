@@ -7,6 +7,9 @@ const WholeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 100%;
+  height: calc(100% - 100px);
+  padding-top: 100px;
   position: absolute;
 `;
 const PhotoDiv = styled.div``;
@@ -25,6 +28,7 @@ const LeftBox = styled.div`
   background: ${palette.gray[5]};
   box-shadow: 0px 1px 24px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  margin-right: 55px;
 
   padding: 30px;
   display: flex;
@@ -97,7 +101,7 @@ function MyProfileForm() {
               <ContentName>
                 <p>이름</p>
               </ContentName>
-              <ContentInput>일이삼사오육칠팔구십일이삼사오육</ContentInput>
+              <ContentInput>일이삼사오육칠팔구십일이삼사오</ContentInput>
             </ContentInputConatiner>
             <ContentInputConatiner>
               <ContentName>

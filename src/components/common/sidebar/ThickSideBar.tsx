@@ -4,18 +4,12 @@ import styled from 'styled-components';
 import { sideIcon } from '../SideIcon';
 import palette from '../../../lib/styles/palette';
 
-const FullScreen = styled.div`
-  position: relative;
-  top: 81px;
-  height: calc(100% - 81px);
-  width: 100%;
-  display: flex;
-  flex-direciton: row;
-`;
 const SideBarContainer = styled.div`
   width: 194px;
+  height: calc(100% - 178px);
+  padding: 100px 0 75px 0;
 
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -129,62 +123,60 @@ function ThickSideBar() {
     alert('로그아웃 되었습니다!');
   };
   return (
-    <FullScreen>
-      <SideBarContainer>
-        <UpperContainer>
-          <Link to="/profilelist" style={{ textDecoration: 'none' }}>
-            <SideMenuContainer
-              className={clickedState.state[0].state === true ? 'clicked' : undefined}
-              id="0"
-              onClick={onToggleClick}
-            >
-              <img alt={sideMenu[0]} src={sideIcon[0]} />
-              <h1>{sideMenu[0]}</h1>
-            </SideMenuContainer>
-          </Link>
-
-          <Link to="/myprofile" style={{ textDecoration: 'none' }}>
-            <SideMenuContainer
-              className={clickedState.state[1].state === true ? 'clicked' : undefined}
-              id="1"
-              onClick={onToggleClick}
-            >
-              <img alt={sideMenu[1]} src={sideIcon[1]} />
-              <h1>{sideMenu[1]}</h1>
-            </SideMenuContainer>
-          </Link>
-
-          <Link to="/chat" style={{ textDecoration: 'none' }}>
-            <SideMenuContainer
-              className={clickedState.state[2].state === true ? 'clicked' : undefined}
-              id="2"
-              onClick={onToggleClick}
-            >
-              <img alt={sideMenu[2]} src={sideIcon[2]} />
-              <h1>{sideMenu[2]}</h1>
-            </SideMenuContainer>
-          </Link>
-        </UpperContainer>
-
-        <LowerContainer>
-          <Link to="/setting" style={{ textDecoration: 'none' }}>
-            <SideMenuContainer
-              className={clickedState.state[3].state === true ? 'clicked' : undefined}
-              id="3"
-              onClick={onToggleClick}
-            >
-              <img alt={sideMenu[3]} src={sideIcon[3]} />
-              <h1>{sideMenu[3]}</h1>
-            </SideMenuContainer>
-          </Link>
-
-          <SideMenuContainer onClick={onLogoutClick}>
-            <img alt={sideMenu[4]} src={sideIcon[4]} />
-            <h1>{sideMenu[4]}</h1>
+    <SideBarContainer>
+      <UpperContainer>
+        <Link to="/profilelist" style={{ textDecoration: 'none' }}>
+          <SideMenuContainer
+            className={clickedState.state[0].state === true ? 'clicked' : undefined}
+            id="0"
+            onClick={onToggleClick}
+          >
+            <img alt={sideMenu[0]} src={sideIcon[0]} />
+            <h1>{sideMenu[0]}</h1>
           </SideMenuContainer>
-        </LowerContainer>
-      </SideBarContainer>
-    </FullScreen>
+        </Link>
+
+        <Link to="/myprofile" style={{ textDecoration: 'none' }}>
+          <SideMenuContainer
+            className={clickedState.state[1].state === true ? 'clicked' : undefined}
+            id="1"
+            onClick={onToggleClick}
+          >
+            <img alt={sideMenu[1]} src={sideIcon[1]} />
+            <h1>{sideMenu[1]}</h1>
+          </SideMenuContainer>
+        </Link>
+
+        <Link to="/chat" style={{ textDecoration: 'none' }}>
+          <SideMenuContainer
+            className={clickedState.state[2].state === true ? 'clicked' : undefined}
+            id="2"
+            onClick={onToggleClick}
+          >
+            <img alt={sideMenu[2]} src={sideIcon[2]} />
+            <h1>{sideMenu[2]}</h1>
+          </SideMenuContainer>
+        </Link>
+      </UpperContainer>
+
+      <LowerContainer>
+        <Link to="/setting" style={{ textDecoration: 'none' }}>
+          <SideMenuContainer
+            className={clickedState.state[3].state === true ? 'clicked' : undefined}
+            id="3"
+            onClick={onToggleClick}
+          >
+            <img alt={sideMenu[3]} src={sideIcon[3]} />
+            <h1>{sideMenu[3]}</h1>
+          </SideMenuContainer>
+        </Link>
+
+        <SideMenuContainer onClick={onLogoutClick}>
+          <img alt={sideMenu[4]} src={sideIcon[4]} />
+          <h1>{sideMenu[4]}</h1>
+        </SideMenuContainer>
+      </LowerContainer>
+    </SideBarContainer>
   );
 }
 

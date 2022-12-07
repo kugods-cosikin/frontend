@@ -5,10 +5,11 @@ const ThickSideBarBox = styled.div`
   position: absolute;
   top: 81px;
   left: 194px;
-  width: calc(100% - 394px);
-  height: calc(100% - 281px);
+  width: calc(100% - 194px);
+  height: calc(100% - 81px);
+  justify-content: center;
 
-  padding: 100px;
+  z-index: -1;
 `;
 
 export default ThickSideBarBox;

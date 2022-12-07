@@ -16,6 +16,7 @@ import MyProfilePage from './view/MyProfilePage/MyProfilePage';
 import ProfileListPage from './view/ProfileListPage/ProfileListPage';
 
 const FullDiv = styled.div`
+  z-index: -3;
   position: absolute;
   top: 0;
   left: 0;
