@@ -1,7 +1,7 @@
 import client from './client';
 
 interface Information {
-  image: File | null | undefined;
+  image: File | null;
   name: string;
   username: string;
   bio: string;
@@ -10,8 +10,12 @@ interface Information {
   stack?: string;
 }
 
-export const hostSetup = ({ image, name, username, bio, type, github, stack }: Information) =>
-  client.post('/profile/create/apply', { image, name, username, bio, type, github, stack });
+export const hostSetup = ({ image, name, username, bio, type, github, stack }: Information) => {
+  const data = { image, name, username, bio, type, github, stack };
+  client.post('/profile/create/apply', data);
+};
 
-export const guestSetup = ({ image, name, username, bio, type }: Information) =>
-  client.post('/profile/create/apply', { image, name, username, bio, type });
+export const guestSetup = ({ image, name, username, bio, type }: Information) => {
+  const data = { image, name, username, bio, type };
+  client.post('/profile/create/apply', data);
+};

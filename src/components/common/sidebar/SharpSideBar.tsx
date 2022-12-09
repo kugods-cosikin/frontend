@@ -7,7 +7,7 @@ const SideBarContainer = styled.div`
   width: 194px;
 `;
 
-function NavBar() {
+function SharpSideBar() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Link to="/login"> Sign in </Link>
@@ -17,4 +17,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default SharpSideBar;

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import client from './client';
 
 interface Information {
@@ -5,8 +6,25 @@ interface Information {
   password: string;
 }
 
-export const login = ({ email, password }: Information) => client.post('/auth/signin/apply', { email, password });
+export const login = ({ email, password }: Information) => {
+  const data = {
+    email,
+    password,
+  };
+  client
+    .post('/auth/signin', data)
+    .then((response) => {
+      const { accessToken } = response.data;
 
-export const register = ({ email, password }: Information) => client.post('/auth/signup/apply', { email, password });
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
-// export const logout = () => client.get('/');
+export const register = ({ email, password }: Information) => client.post('/auth/signup', { email, password });
+
+export const check = () => client.get('/auth/check');
+
+export const logout = () => client.post('/auth/logout');

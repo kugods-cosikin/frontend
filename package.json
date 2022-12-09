@@ -58,5 +58,6 @@
     "react-helmet": "^6.1.0",
     "typescript": "^4.9.3",
     "typescript-eslint": "^0.0.1-alpha.0"
-  }
+  },
+  "proxy": "http://localhost:4000/"
 }

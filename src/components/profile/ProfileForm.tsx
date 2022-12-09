@@ -5,9 +5,6 @@ import palette from '../../lib/styles/palette';
 import Button from '../common/Button';
 import profile from '../common/images/icon_profile.png';
 
-const ClickedDiv = styled.div`
-  cursor: pointer;
-`;
 const ProfileContainer = styled.div`
   position: relative;
   width: 460px;
