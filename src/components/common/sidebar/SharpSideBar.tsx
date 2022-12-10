@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const SideBarContainer = styled.div`
-  heigth: 100%;
+  height: 100%;
   width: 194px;
 `;
 
