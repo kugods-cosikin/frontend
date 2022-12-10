@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import CryptoJs from 'crypto-js';
 import { login, register } from '../../lib/api/auth';
 import palette from '../../lib/styles/palette';
 import LogoTitle from '../common/LogoTitle';
@@ -18,7 +19,7 @@ const LeftBox = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  align-itmes: center;
+  align-items: center;
   justify-content: center;
   background-color: ${palette.purple[3]};
 
@@ -26,7 +27,7 @@ const LeftBox = styled.div`
 
   & div {
     width: 410px;
-    weight: 700;
+    font-weight: 700;
     margin: auto;
   }
   & h2 {
@@ -45,7 +46,7 @@ const RightBox = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
-  align-itmes: center;
+  align-items: center;
   justify-content: center;
 
   min-width: max-content;
@@ -110,6 +111,7 @@ function AuthForm({ type }: Props) {
     email: '',
     password: '',
     passwordConfirm: '',
+    hashed: '',
   });
   const { email, password, passwordConfirm } = inputs;
 
@@ -172,7 +174,9 @@ function AuthForm({ type }: Props) {
     setInputs({
       ...inputs,
       [name]: value,
+      hashed: CryptoJs.SHA512(inputs.password).toString(),
     });
+    console.log(inputs.hashed);
   };
   const passwordToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordView(e.target.checked);
