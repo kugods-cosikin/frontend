@@ -15,6 +15,8 @@ import Sidebar from './view/SideBar/SideBar';
 import MyProfilePage from './view/MyProfilePage/MyProfilePage';
 import ProfileListPage from './view/ProfileListPage/ProfileListPage';
 
+import './App.css';
+
 const FullDiv = styled.div`
   z-index: -3;
   position: absolute;

@@ -38,6 +38,7 @@ const StyledFile = styled.input`
 
   &::file-selector-button {
     display: none;
+  }
 `;
 const PhotoDiv = styled.img`
   width: 110px;

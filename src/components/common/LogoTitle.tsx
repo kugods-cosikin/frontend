@@ -8,7 +8,7 @@ import logo from './images/logo.png';
 const LogoTitleContainer = styled.div`
   display: flex;
   flex-direction: row;
-  align-itmes: center;
+  align-items: center;
   height: max-content;
   width: 700;
   margin-bottom: 30px;
