@@ -9,6 +9,7 @@ module.exports = {
     'plugin:import/warnings', // 설치한 경우
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'prettier',
   ],
   rules: {
     'prettier/prettier': [
