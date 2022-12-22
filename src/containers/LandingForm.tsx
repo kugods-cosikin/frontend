@@ -16,7 +16,7 @@ const LandingBox = styled.div`
 `;
 
 const MainBox = styled.div`
-  margin: 250px 0 0 0;
+  margin: 230px 0 0 0;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
