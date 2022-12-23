@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { readProfile } from '../../lib/api/profiles';
 import palette from '../../lib/styles/palette';
 import Photo from '../common/Photo';
 
@@ -93,8 +94,8 @@ const LeftBoxContainer = styled.div`
   flex-direction: column;
 `;
 const RightBox = styled.div`
-  width: 384px;
-  height: 255px;
+  width: 400px;
+  height: 405px;
   background: ${palette.gray[5]};
   box-shadow: 0px 1px 24px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -112,7 +113,17 @@ const ContentInputContainer = styled.div`
   border: 1px solid #9f9f9f;
   width: 323px;
   height: 40px;
-  margin: 15px;
+  margin: 15px 15px 15px 0px;
+  padding-left: 15px;
+`;
+const StackContainer = styled.div`
+  display: flex;
+  border-radius: 10px;
+  border: 1px solid #9f9f9f;
+  width: 323px;
+  height: 235px;
+  margin: 15px 15px 15px 0px;
+  padding-left: 15px;
 `;
 const ContentName = styled.div`
   margin-left: 10px;
@@ -125,7 +136,7 @@ const ContentName = styled.div`
     font-weight: 700;
   }
 `;
-const ContentInput = styled.p`
+const ContentInput = styled.input`
   font-size: 15px;
   height: 20px;
   width: 240px;
@@ -134,15 +145,79 @@ const ContentInput = styled.p`
   outline: none;
   text-align: left;
   margin: 10px 0 0 0;
-  border-left: 2px solid black;
+  border-left: 2px solid ${palette.gray[3]};
+`;
+const ContentP = styled.p`
+  font-size: 15px;
+  height: 20px;
+  width: 240px;
+  border: none;
+  padding-left: 10px;
+  outline: none;
+  text-align: left;
+  margin: 10px 0 0 0;
+  border-left: 2px solid ${palette.gray[3]};
+`;
+const PDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+const StyledTextArea = styled.textarea`
+  font-size: 15px;
+  border: 0px;
+  border-left: 2px solid ${palette.gray[3]};
+  padding-left: 10px;
+  outline: none;
+  resize: none;
+  height: 210px;
+  width: 220px;
+  margin-top: 10px;
+`;
+const RightContent = styled.div`
+  margin: 15px 25px;
+`;
+const ButtonDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+const Button = styled.button`
+  margin-top: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  font-size: 17px;
+  width: 150px;
+  height: 49px;
+  background-color: ${palette.purple[1]};
 `;
 
 function MyProfileForm() {
+  // Photo component에 필요한 params
   const [isButtonOn, setIsButtonOn] = useState(false);
   const handlePhotoCallback = () => {
     console.log('ㅎ');
   };
 
+  // 버튼 상태관리, 수정 -> 제출로 변경
+  const [isModify, setIsModify] = useState(false);
+
+  const [inputContents, setInputContents] = useState({
+    bio: '',
+    nickname: '',
+    github: '',
+    stack: '',
+  });
+
+  // const data = readProfile;
+  // UserTypeDiv => {data.isHost ? '호스트' : '게스트'}
+  // UserNameDiv => {data.username}
+  // UserMailDiv => {data.email}
+  // OnelineDiv > h1 => {data.bio}
+  // LeftLowerBox > ContentInput => {data.name}, {data.username}, {data.email}
+  // RighBox > ContentInput => {data.github ? data.github : null}
+  // RighBox > ContentInput => {data.stack ? data.stack : null}
   return (
     <WholeContainer>
       <form>
@@ -175,7 +250,7 @@ function MyProfileForm() {
                 <ContentName>
                   <p>이름</p>
                 </ContentName>
-                <ContentInput>일이삼사오육칠팔구십일이삼사오</ContentInput>
+                <ContentP>얘는 정해진 값!</ContentP>
               </ContentInputContainer>
               <ContentInputContainer>
                 <ContentName>
@@ -187,12 +262,36 @@ function MyProfileForm() {
                 <ContentName>
                   <p>이메일</p>
                 </ContentName>
-                <ContentInput />
+                <ContentP>얘는 정해진 값!</ContentP>
               </ContentInputContainer>
             </LeftLowerBox>
           </LeftBoxContainer>
-          <RightBox />
+          <RightBox>
+            <RightContent>
+              <PDiv>
+                <h1 style={{ textAlign: 'left', fontSize: '17px' }}>호스트 정보</h1>
+                <p>
+                  <a href="/host_what?">호스트가 뭔가요?</a>
+                </p>
+              </PDiv>
+              <ContentInputContainer>
+                <ContentName>
+                  <p>깃허브</p>
+                </ContentName>
+                <ContentInput />
+              </ContentInputContainer>
+              <StackContainer>
+                <ContentName>
+                  <p>스택</p>
+                </ContentName>
+                <StyledTextArea name="stack" placeholder="" maxLength={100} />
+              </StackContainer>
+            </RightContent>
+          </RightBox>
         </BoxContainer>
+        <ButtonDiv>
+          <Button>{!isModify ? '수정' : '제출'}</Button>
+        </ButtonDiv>
       </form>
     </WholeContainer>
   );

@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { sideIcon } from '../SideIcon';
 import palette from '../../../lib/styles/palette';
+import { ReactComponent as Explore } from '../images/icon_sidebar_explore.svg';
+import { ReactComponent as Profile } from '../images/icon_sidebar_profile.svg';
+import { ReactComponent as Chat } from '../images/icon_sidebar_chat.svg';
+import { ReactComponent as Setting } from '../images/icon_sidebar_settings.svg';
+import { ReactComponent as Logout } from '../images/icon_sidebar_logout.svg';
 
 const SideBarContainer = styled.div`
   width: 194px;
@@ -33,12 +37,6 @@ const SideMenuContainer = styled.div`
   padding-left: 25px;
   cursor: pointer;
 
-  & img {
-    width: 18px;
-    height: 18px;
-    margin: auto 0;
-    margin-right: 10px;
-  }
   & h1 {
     font-size: 20px;
     line-height: 100%;
@@ -48,6 +46,7 @@ const SideMenuContainer = styled.div`
   &.clicked {
     background-color: ${palette.purple[2]};
     border-left: 5px solid ${palette.purple[0]};
+    padding-left: 20px;
     color: ${palette.gray[0]};
     border-radius: 0px 20px 0px 0px;
     & h1 {
@@ -131,7 +130,7 @@ function ThickSideBar() {
             id="0"
             onClick={onToggleClick}
           >
-            <img alt={sideMenu[0]} src={sideIcon[0]} />
+            <Explore height="18" width="18" style={{ margin: 'auto 0', marginRight: '10px' }} />
             <h1>{sideMenu[0]}</h1>
           </SideMenuContainer>
         </Link>
@@ -142,7 +141,7 @@ function ThickSideBar() {
             id="1"
             onClick={onToggleClick}
           >
-            <img alt={sideMenu[1]} src={sideIcon[1]} />
+            <Profile height="18" width="18" style={{ margin: 'auto 0', marginRight: '10px' }} />
             <h1>{sideMenu[1]}</h1>
           </SideMenuContainer>
         </Link>
@@ -153,7 +152,7 @@ function ThickSideBar() {
             id="2"
             onClick={onToggleClick}
           >
-            <img alt={sideMenu[2]} src={sideIcon[2]} />
+            <Chat height="18" width="18" style={{ margin: 'auto 0', marginRight: '10px' }} />
             <h1>{sideMenu[2]}</h1>
           </SideMenuContainer>
         </Link>
@@ -166,13 +165,13 @@ function ThickSideBar() {
             id="3"
             onClick={onToggleClick}
           >
-            <img alt={sideMenu[3]} src={sideIcon[3]} />
+            <Setting height="18" width="18" style={{ margin: 'auto 0', marginRight: '10px' }} />
             <h1>{sideMenu[3]}</h1>
           </SideMenuContainer>
         </Link>
 
         <SideMenuContainer onClick={onLogoutClick}>
-          <img alt={sideMenu[4]} src={sideIcon[4]} />
+          <Logout height="18" width="18" style={{ margin: 'auto 0', marginRight: '10px' }} />
           <h1>{sideMenu[4]}</h1>
         </SideMenuContainer>
       </LowerContainer>
