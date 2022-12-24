@@ -115,6 +115,13 @@ const ContentInputContainer = styled.div`
   height: 40px;
   margin: 15px 15px 15px 0px;
   padding-left: 15px;
+  .host {
+    &div {
+      &p {
+        color: ${palette.gray[2]};
+      }
+    }
+  }
 `;
 const StackContainer = styled.div`
   display: flex;
@@ -193,6 +200,17 @@ const Button = styled.button`
   background-color: ${palette.purple[1]};
 `;
 
+const data = {
+  type: 'host',
+  image: '',
+  username: 'beigeseal',
+  bio: '잘부탁드립니다',
+  name: 'LYC',
+  email: 'dhapdhap123@naver.com',
+  github: 'dhapdhap123',
+  stack: '#React',
+};
+
 function MyProfileForm() {
   // Photo component에 필요한 params
   const [isButtonOn, setIsButtonOn] = useState(false);
@@ -203,37 +221,54 @@ function MyProfileForm() {
   // 버튼 상태관리, 수정 -> 제출로 변경
   const [isModify, setIsModify] = useState(false);
 
-  const [inputContents, setInputContents] = useState({
-    bio: '',
-    nickname: '',
-    github: '',
-    stack: '',
+  const [dataState, setDataState] = useState({
+    type: data.type,
+    image: data.image,
+    email: data.email,
+    bio: data.bio,
+    nickname: data.username,
+    github: data.github,
+    stack: data.stack,
   });
 
-  // const data = readProfile;
-  // UserTypeDiv => {data.isHost ? '호스트' : '게스트'}
-  // UserNameDiv => {data.username}
-  // UserMailDiv => {data.email}
-  // OnelineDiv > h1 => {data.bio}
-  // LeftLowerBox > ContentInput => {data.name}, {data.username}, {data.email}
-  // RighBox > ContentInput => {data.github ? data.github : null}
-  // RighBox > ContentInput => {data.stack ? data.stack : null}
+  // const data = readProfile({id});
+  // 프로필 누르면 /profile/id 로 이동, 그 후 쿼리 읽어와 get 해주기
+
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setDataState({ ...dataState, [name]: value });
+  };
+  const onTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setDataState({ ...dataState, [name]: value });
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isModify) {
+      setIsModify((p) => !p);
+    } else {
+      setIsModify((p) => !p);
+      alert('제출되었습니다!');
+      // updateProfile(id, username, bio, type, github, stack)
+    }
+  };
+
   return (
     <WholeContainer>
-      <form>
+      <form onSubmit={onSubmit}>
         <TopBoxContainer>
           <PhotoDiv>
             <Photo parentCallback={handlePhotoCallback} isButtonOn={isButtonOn} />
           </PhotoDiv>
           <UserContainer>
             <UserTypeDiv>
-              <p>호스트</p>
+              <p>{data.type === 'host' ? '호스트' : '게스트'}</p>
             </UserTypeDiv>
             <UserNameDiv>
-              <p>Username</p>
+              <p>{data.name}</p>
             </UserNameDiv>
             <UserMailDiv>
-              <p>example@email.com</p>
+              <p>{data.email}</p>
             </UserMailDiv>
           </UserContainer>
         </TopBoxContainer>
@@ -242,7 +277,13 @@ function MyProfileForm() {
             <LeftUpperBox>
               <OneLineDiv>
                 <h1 style={{ textAlign: 'left', fontSize: '17px' }}>한줄소개</h1>
-                <StyledInput placeholder="한줄소개" />
+                <StyledInput
+                  name="bio"
+                  onChange={onInputChange}
+                  placeholder="한줄소개"
+                  value={dataState.bio}
+                  disabled={!isModify}
+                />
               </OneLineDiv>
             </LeftUpperBox>
             <LeftLowerBox>
@@ -250,19 +291,24 @@ function MyProfileForm() {
                 <ContentName>
                   <p>이름</p>
                 </ContentName>
-                <ContentP>얘는 정해진 값!</ContentP>
+                <ContentP>{data.name}</ContentP>
               </ContentInputContainer>
               <ContentInputContainer>
                 <ContentName>
                   <p>닉네임</p>
                 </ContentName>
-                <ContentInput />
+                <ContentInput
+                  name="nickname"
+                  onChange={onInputChange}
+                  value={dataState.nickname}
+                  disabled={!isModify}
+                />
               </ContentInputContainer>
               <ContentInputContainer>
                 <ContentName>
                   <p>이메일</p>
                 </ContentName>
-                <ContentP>얘는 정해진 값!</ContentP>
+                <ContentP>{data.email}</ContentP>
               </ContentInputContainer>
             </LeftLowerBox>
           </LeftBoxContainer>
@@ -274,17 +320,28 @@ function MyProfileForm() {
                   <a href="/host_what?">호스트가 뭔가요?</a>
                 </p>
               </PDiv>
-              <ContentInputContainer>
+              <ContentInputContainer className={data.type}>
                 <ContentName>
                   <p>깃허브</p>
                 </ContentName>
-                <ContentInput />
+                <ContentInput
+                  name="github"
+                  onChange={onInputChange}
+                  value={dataState.github}
+                  disabled={data.type === 'guest' ? true : !isModify}
+                />
               </ContentInputContainer>
-              <StackContainer>
+              <StackContainer className={data.type}>
                 <ContentName>
                   <p>스택</p>
                 </ContentName>
-                <StyledTextArea name="stack" placeholder="" maxLength={100} />
+                <StyledTextArea
+                  name="stack"
+                  onChange={onTextAreaChange}
+                  maxLength={100}
+                  value={dataState.stack}
+                  disabled={data.type === 'guest' ? true : !isModify}
+                />
               </StackContainer>
             </RightContent>
           </RightBox>
